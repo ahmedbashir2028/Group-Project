@@ -18,11 +18,15 @@
 import Login from "views/Login.js";
 import Dashboard from "views/Dashboard.js";
 import UserProfile from "views/UserProfile.js";
-import Create from "views/Create.js";
+import AddProduct from "views/AddProduct.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
 import Notifications from "views/Notifications.js";
+import AllProducts from "views/AllProducts";
+import Payments from "views/Payments";
+import Orders from "views/Orders";
+import CustomersList from "views/CustomersList";
 
 const dashboardRoutes = [
   {
@@ -31,7 +35,7 @@ const dashboardRoutes = [
     icon: "nc-icon nc-chart-pie-35",
     component: Login,
     showInSideBar: false,
-    layout: "/unauth"
+    layout: "/unauth",
   },
   {
     path: "/dashboard",
@@ -39,56 +43,88 @@ const dashboardRoutes = [
     icon: "nc-icon nc-chart-pie-35",
     component: Dashboard,
     showInSideBar: true,
-    layout: "/admin"
+    layout: "/admin",
   },
+  // {
+  //   path: "/user",
+  //   name: "User Profile",
+  //   icon: "nc-icon nc-circle-09",
+  //   component: UserProfile,
+  //   showInSideBar: true,
+  //   layout: "/admin",
+  // },
   {
-    path: "/user",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-09",
-    component: UserProfile,
+    path: "/products",
+    name: "All Products",
+    icon: "nc-icon nc-app",
+    component: AllProducts,
     showInSideBar: true,
-    layout: "/admin"
+    layout: "/admin",
+  },
+  // {
+  //   path: "/table",
+  //   name: "List",
+  //   icon: "nc-icon nc-notes",
+  //   component: TableList,
+  //   showInSideBar: true,
+  //   layout: "/admin",
+  // },
+  {
+    path: "/AddProduct",
+    name: "Add Product",
+    icon: "nc-icon nc-simple-add",
+    component: AddProduct,
+    showInSideBar: true,
+    layout: "/admin",
   },
   {
-    path: "/table",
-    name: "List",
+    path: "/Payments",
+    name: "Payments",
+    icon: "nc-icon nc-credit-card",
+    component: Payments,
+    showInSideBar: true,
+    layout: "/admin",
+  },
+  {
+    path: "/Orders",
+    name: "Orders",
     icon: "nc-icon nc-notes",
-    component: TableList,
+    component: Orders,
     showInSideBar: true,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
-    path: "/create",
-    name: "Create",
-    icon: "nc-icon nc-notes",
-    component: Create,
-    showInSideBar: false,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-paper-2",
-    component: Typography,
+    path: "/CustomersList",
+    name: "Customers List",
+    icon: "nc-icon nc-single-02",
+    component: CustomersList,
     showInSideBar: true,
-    layout: "/admin"
+    layout: "/admin",
   },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: "nc-icon nc-paper-2",
+  //   component: Typography,
+  //   showInSideBar: true,
+  //   layout: "/admin",
+  // },
   {
     path: "/icons",
     name: "Icons",
     icon: "nc-icon nc-atom",
     component: Icons,
     showInSideBar: true,
-    layout: "/admin"
+    layout: "/admin",
   },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    showInSideBar: true,
-    component: Notifications,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "nc-icon nc-bell-55",
+  //   showInSideBar: true,
+  //   component: Notifications,
+  //   layout: "/admin",
+  // },
 ];
 
 export default dashboardRoutes;

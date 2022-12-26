@@ -22,6 +22,8 @@ import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import routes from "routes.js";
 
 function Header() {
+  const date = new Date().toLocaleDateString();
+
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -76,11 +78,12 @@ function Header() {
                 onClick={(e) => e.preventDefault()}
                 className="m-0"
               >
-                <i className="nc-icon nc-palette"></i>
+                {/* <i className="nc-icon nc-palette"></i> */}
+                <span>{date}</span>
                 <span className="d-lg-none ml-1">Dashboard</span>
               </Nav.Link>
             </Nav.Item>
-            <Dropdown as={Nav.Item}>
+            {/* <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 as={Nav.Link}
                 data-toggle="dropdown"
@@ -134,7 +137,7 @@ function Header() {
                 <i className="nc-icon nc-zoom-split"></i>
                 <span className="d-lg-block"> Search</span>
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
           <Nav className="ml-auto" navbar>
             <Nav.Item>
@@ -143,10 +146,10 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Account</span>
+                {/* <span className="no-icon">Account</span> */}
               </Nav.Link>
             </Nav.Item>
-            <Dropdown as={Nav.Item}>
+            {/* <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 aria-expanded={false}
                 aria-haspopup={true}
@@ -191,7 +194,7 @@ function Header() {
                   Separated link
                 </Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
             <Nav.Item>
               <Nav.Link
                 className="m-0"

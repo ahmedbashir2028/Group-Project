@@ -69,7 +69,7 @@ function Admin() {
           <div className="content">
             <Switch>{getRoutes(routes)}</Switch>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </>

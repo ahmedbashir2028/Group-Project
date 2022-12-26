@@ -1,13 +1,7 @@
 import React from "react";
 
 // react-bootstrap components
-import {
-  Card,
-  Table,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Card, Table, Container, Row, Col } from "react-bootstrap";
 
 function TableList() {
   return (
@@ -17,10 +11,8 @@ function TableList() {
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
-                <Card.Title as="h4">List of Items</Card.Title>
-                <p className="card-category">
-                  Here is a subtitle for this table
-                </p>
+                <Card.Title as="h4">List of Products</Card.Title>
+                <p className="card-category">List of all available products</p>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table className="table-hover table-striped">

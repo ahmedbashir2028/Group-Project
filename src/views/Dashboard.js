@@ -1,12 +1,8 @@
 import React from "react";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
-import {
-  Card,
- Container,
-  Row,
-  Col
-} from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
+import Orders from "./Orders";
 
 function Dashboard() {
   return (
@@ -19,23 +15,23 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-chart text-warning"></i>
+                      <i className="nc-icon nc-single-02 text-warning"></i>
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Number</p>
-                      <Card.Title as="h4">150GB</Card.Title>
+                      <p className="card-category">Total Customers</p>
+                      <Card.Title as="h4">150</Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
-                <hr></hr>
-                <div className="stats">
+                {/* <hr></hr> */}
+                {/* <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
                   Update Now
-                </div>
+                </div> */}
               </Card.Footer>
             </Card>
           </Col>
@@ -45,23 +41,23 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-light-3 text-success"></i>
+                      <i className="nc-icon nc-notes text-success"></i>
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Revenue</p>
-                      <Card.Title as="h4">$ 1,345</Card.Title>
+                      <p className="card-category">Total Orders</p>
+                      <Card.Title as="h4">1,345</Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
-                <hr></hr>
-                <div className="stats">
+                {/* <hr></hr> */}
+                {/* <div className="stats">
                   <i className="far fa-calendar-alt mr-1"></i>
                   Last day
-                </div>
+                </div> */}
               </Card.Footer>
             </Card>
           </Col>
@@ -71,23 +67,23 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-vector text-danger"></i>
+                      <i className="nc-icon nc-app text-danger"></i>
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Errors</p>
+                      <p className="card-category">Total Products</p>
                       <Card.Title as="h4">23</Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
-                <hr></hr>
-                <div className="stats">
+                {/* <hr></hr> */}
+                {/* <div className="stats">
                   <i className="far fa-clock-o mr-1"></i>
                   In the last hour
-                </div>
+                </div> */}
               </Card.Footer>
             </Card>
           </Col>
@@ -97,32 +93,32 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary"></i>
+                      <i className="nc-icon nc-credit-card text-primary"></i>
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Followers</p>
-                      <Card.Title as="h4">+45K</Card.Title>
+                      <p className="card-category">Revenue</p>
+                      <Card.Title as="h4">4554 Rs</Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
-                <hr></hr>
+                {/* <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
                   Update now
-                </div>
+                </div> */}
               </Card.Footer>
             </Card>
           </Col>
         </Row>
         <Row>
-          <Col md="8">
-            <Card>
+          {/* <Col md="8"> */}
+          {/* <Card>
               <Card.Header>
-                <Card.Title as="h4">Users Behavior</Card.Title>
+                <Card.Title as="h4">Order</Card.Title>
                 <p className="card-category">24 Hours performance</p>
               </Card.Header>
               <Card.Body>
@@ -190,13 +186,15 @@ function Dashboard() {
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
-            </Card>
-          </Col>
-          <Col md="4">
+            </Card> */}
+          {/* </Col> */}
+          <Col md="6">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Email Statistics</Card.Title>
-                <p className="card-category">Last Campaign Performance</p>
+                <Card.Title as="h4">Orders Status</Card.Title>
+                <p className="card-category">
+                  Completed / Pending / total Orders
+                </p>
               </Card.Header>
               <Card.Body>
                 <div
@@ -213,21 +211,55 @@ function Dashboard() {
                 </div>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>
-                  Open <i className="fas fa-circle text-danger"></i>
-                  Bounce <i className="fas fa-circle text-warning"></i>
-                  Unsubscribe
+                  Completed <i className="fas fa-circle text-danger"></i>
+                  Pending <i className="fas fa-circle text-warning"></i>
+                  Total Orders
                 </div>
-                <hr></hr>
-                <div className="stats">
+                {/* <hr></hr> */}
+                {/* <div className="stats">
                   <i className="far fa-clock"></i>
                   Campaign sent 2 days ago
+                </div> */}
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="6">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Stock Status </Card.Title>
+                <p className="card-category">
+                  Totatal Orders / Remaining Stock
+                </p>
+              </Card.Header>
+              <Card.Body>
+                <div
+                  className="ct-chart ct-perfect-fourth"
+                  id="chartPreferences"
+                >
+                  <ChartistGraph
+                    data={{
+                      labels: ["40%", "20%"],
+                      series: [40, 20],
+                    }}
+                    type="Pie"
+                  />
                 </div>
+                <div className="legend">
+                  <i className="fas fa-circle text-info"></i>
+                  Total Orders <i className="fas fa-circle text-danger"></i>
+                  Remaining Stock
+                </div>
+                {/* <hr></hr> */}
+                {/* <div className="stats">
+                  <i className="far fa-clock"></i>
+                  Campaign sent 2 days ago
+                </div> */}
               </Card.Body>
             </Card>
           </Col>
         </Row>
         <Row>
-          <Col md="12">
+          {/* <Col md="12">
             <Card>
               <Card.Header>
                 <Card.Title as="h4">2017 Sales</Card.Title>
@@ -253,31 +285,11 @@ function Dashboard() {
                       ],
                       series: [
                         [
-                          542,
-                          443,
-                          320,
-                          780,
-                          553,
-                          453,
-                          326,
-                          434,
-                          568,
-                          610,
-                          756,
+                          542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756,
                           895,
                         ],
                         [
-                          412,
-                          243,
-                          280,
-                          580,
-                          453,
-                          353,
-                          300,
-                          364,
-                          368,
-                          410,
-                          636,
+                          412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636,
                           695,
                         ],
                       ],
@@ -319,6 +331,10 @@ function Dashboard() {
                 </div>
               </Card.Footer>
             </Card>
+          </Col> */}
+
+          <Col md="12">
+            <Orders />
           </Col>
         </Row>
       </Container>
