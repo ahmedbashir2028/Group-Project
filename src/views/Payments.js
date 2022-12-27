@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 // react-bootstrap components
 import { Card, Table, Container, Row, Col, Form } from "react-bootstrap";
 
 function Payments() {
+  // payment status state hooks
+  const options = ["Pending", "Done"];
+  const [paymentStatus, setPaymentStatus] = useState(options[0]);
+
   return (
     <>
       <Container fluid>
@@ -32,13 +36,17 @@ function Payments() {
                       <td>Ahmed</td>
                       <td>Oppo F15 pro</td>
                       <td>14-12-2022</td>
-                      <td>Pending</td>
+                      <td>{paymentStatus}</td>
                       <td>
                         {" "}
-                        <Form.Select className="form-control">
-                          <option>Select</option>
-                          <option value="done">Done</option>
-                          <option value="pending">Pending</option>
+                        <Form.Select
+                          onChange={(e) => setPaymentStatus(e.target.value)}
+                          defaultValue={paymentStatus}
+                          className="form-control"
+                        >
+                          {options.map((option, idx) => (
+                            <option key={idx}>{option}</option>
+                          ))}
                         </Form.Select>
                       </td>
                     </tr>

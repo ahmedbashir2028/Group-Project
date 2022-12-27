@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useHistory } from "react-router";
 // react-bootstrap components
 import {
   Button,
@@ -7,10 +7,65 @@ import {
   Form,
   Container,
   Row,
-  Col
+  Col,
+  Table,
 } from "react-bootstrap";
 
+// confirmation alert import
+
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+
 function User() {
+  // useHistory
+
+  const history = useHistory();
+  // Admin profile useState
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+  // banner side useState
+  const [bannerTitle, setBannerTitle] = useState("");
+  const [bannerImage, setBannerImage] = useState(null);
+
+  // handle Profile submission
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+    console.log(oldPassword, newPassword);
+  };
+
+  // handle banner submission
+  const handleBanner = (e) => {
+    e.preventDefault();
+    if (bannerImage && bannerTitle) {
+      console.log(bannerImage, bannerTitle);
+    }
+  };
+
+  // handle deletion confirmation
+  const handleDeleteAlert = (id) => {
+    confirmAlert({
+      title: "Delete",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelete(id),
+        },
+        {
+          label: "No",
+          onClick: () => history.goBack,
+        },
+      ],
+    });
+  };
+
+  // handle delete
+  const handleDelete = (id) => {
+    console.log(id);
+  };
   return (
     <>
       <Container fluid>
@@ -18,128 +73,66 @@ function User() {
           <Col md="8">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Edit Profile</Card.Title>
+                <Card.Title as="h4">User Profile</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
-                  <Row>
-                    <Col className="pr-1" md="5">
-                      <Form.Group>
-                        <label>Company (disabled)</label>
-                        <Form.Control
-                          defaultValue="Creative Code Inc."
-                          disabled
-                          placeholder="Company"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="3">
-                      <Form.Group>
-                        <label>Username</label>
-                        <Form.Control
-                          defaultValue="michael23"
-                          placeholder="Username"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <Form.Control
-                          placeholder="Email"
-                          type="email"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
+                <Form onSubmit={handleProfileUpdate}>
                   <Row>
                     <Col className="pr-1" md="6">
                       <Form.Group>
-                        <label>First Name</label>
+                        <label>Admin Name</label>
                         <Form.Control
-                          defaultValue="Mike"
-                          placeholder="Company"
+                          // defaultValue="Mike"
+                          placeholder="Mike"
                           type="text"
+                          disabled
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col className="pl-1" md="6">
                       <Form.Group>
-                        <label>Last Name</label>
+                        <label>Admin Email</label>
                         <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
+                          // defaultValue="Andrew"
+                          placeholder="example@email.com"
+                          type="email"
+                          disabled
                         ></Form.Control>
                       </Form.Group>
-                    </Col>
-                  </Row>
+                    </Col>{" "}
+                  </Row>{" "}
                   <Row>
-                    <Col md="12">
+                    <Col className="pr-1" md="6">
                       <Form.Group>
-                        <label>Address</label>
+                        <label>Old Password</label>
                         <Form.Control
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
-                          type="text"
+                          // defaultValue="Mike"
+                          placeholder="Password"
+                          type="password"
+                          value={oldPassword}
+                          required
+                          onChange={(e) => setOldPassword(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="4">
+                    <Col className="pl-1" md="6">
                       <Form.Group>
-                        <label>City</label>
+                        <label>New Password</label>
                         <Form.Control
-                          defaultValue="Mike"
-                          placeholder="City"
-                          type="text"
+                          // defaultValue="Andrew"
+                          placeholder="password"
+                          type="password"
+                          required
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="4">
-                      <Form.Group>
-                        <label>Country</label>
-                        <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label>Postal Code</label>
-                        <Form.Control
-                          placeholder="ZIP Code"
-                          type="number"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label>About Me</label>
-                        <Form.Control
-                          cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                          that two seat Lambo."
-                          placeholder="Here can be your description"
-                          rows="4"
-                          as="textarea"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
+                    </Col>{" "}
                   </Row>
                   <Button
                     className="btn-fill pull-right"
                     type="submit"
-                    variant="info"
+                    variant="primary"
                   >
                     Update Profile
                   </Button>
@@ -164,9 +157,9 @@ function User() {
                       className="avatar border-gray"
                       src={require("assets/img/faces/face-3.jpg")}
                     ></img>
-                    <h5 className="title">Mike Andrew</h5>
+                    <h5 className="title">Admin Name</h5>
                   </a>
-                  <p className="description">michael24</p>
+                  <p className="description">Email</p>
                 </div>
                 <p className="description text-center">
                   "Lamborghini Mercy <br></br>
@@ -174,7 +167,7 @@ function User() {
                   I'm in that two seat Lambo"
                 </p>
               </Card.Body>
-              <hr></hr>
+              {/* <hr></hr>
               <div className="button-container mr-auto ml-auto">
                 <Button
                   className="btn-simple btn-icon"
@@ -200,8 +193,107 @@ function User() {
                 >
                   <i className="fab fa-google-plus-square"></i>
                 </Button>
-              </div>
+              </div> */}
             </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="6">
+            <Card>
+              <Card.Header>
+                <Card.Title as="h4">Add Banner image</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                <Form onSubmit={handleBanner}>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>Enter Image title</label>
+                        <Form.Control
+                          placeholder="Sale"
+                          type="text"
+                          className="form-control"
+                          required
+                          value={bannerTitle}
+                          onChange={(e) => setBannerTitle(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>{" "}
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>Select Banner Image</label>
+                        <Form.Control
+                          placeholder="banner image"
+                          type="file"
+                          required
+                          className="form-control"
+                          onChange={(e) => setBannerImage(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Button
+                    className="btn-fill pull-right"
+                    type="submit"
+                    variant="primary"
+                  >
+                    Save
+                  </Button>
+                  <div className="clearfix"></div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md="6">
+            <Container fluid>
+              <Row>
+                <Col md="12">
+                  <Card className="strpied-tabled-with-hover">
+                    <Card.Header>
+                      <Card.Title as="h4">Banners</Card.Title>
+                      {/* <p className="card-category">
+                List of all available 
+                </p> */}
+                    </Card.Header>
+                    <Card.Body className="table-full-width table-responsive px-0">
+                      <Table className="table-hover table-striped">
+                        <thead>
+                          <tr>
+                            <th className="border-0">ID</th>
+                            <th className="border-0">Banner Name</th>
+                            <th className="border-0">image</th>
+                            <th className="border-0">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1</td>
+                            <td>Sale</td>
+                            <td>
+                              <img
+                                src="none"
+                                className="img img-fluid"
+                                alt="banner image"
+                              />
+                            </td>
+                            <td>
+                              <button
+                                className="btn btn-danger"
+                                onClick={() => handleDeleteAlert(1)}
+                              >
+                                delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
           </Col>
         </Row>
       </Container>

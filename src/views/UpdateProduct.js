@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 // react-bootstrap components
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 
-// toaster alert
-import { ToastContainer, toast } from "react-toastify";
+// reuseable notification component
 import Swal from "sweetalert2";
-function AddProduct() {
+
+function UpdateProduct() {
   // useState hook for form data management
   const [productId, setProductId] = useState("");
   const [productName, setProductName] = useState("");
@@ -15,9 +16,13 @@ function AddProduct() {
   const [productStock, setProductStock] = useState("");
   const [productDetails, setProductDetails] = useState("");
   const [productImage, setProductImage] = useState(null);
+
   // error management hook
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // useHistory
+  const history = useHistory();
 
   // toast notification
   const Saved = () => {
@@ -29,7 +34,6 @@ function AddProduct() {
     });
   };
   // form submission handling function
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -45,6 +49,7 @@ function AddProduct() {
     );
 
     Saved();
+    setSuccess("Form Submitted Successfully");
   };
   return (
     <>
@@ -53,7 +58,7 @@ function AddProduct() {
           <Col md="12">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Add New Product</Card.Title>
+                <Card.Title as="h4">Update Product</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
@@ -154,6 +159,7 @@ function AddProduct() {
                           placeholder="Please select product image"
                           value={productImage}
                           onChange={(e) => setProductImage(e.target.value)}
+                          required
                         />
                       </Form.Group>
                     </Col>
@@ -176,14 +182,22 @@ function AddProduct() {
                       </Form.Group>
                     </Col>
                   </Row>
+
                   <Button
                     className="btn-fill pull-right mt-2"
                     type="submit"
                     variant="primary"
                     // onClick={handleSubmit}
                   >
-                    Add Product
+                    Update Product
                   </Button>
+                  <button
+                    className="btn btn-light mt-2 mx-2"
+                    onClick={history.goBack}
+                    type="button"
+                  >
+                    Back
+                  </button>
                   <div className="clearfix"></div>
                 </Form>
               </Card.Body>
@@ -191,9 +205,8 @@ function AddProduct() {
           </Col>
         </Row>
       </Container>
-      <ToastContainer />
     </>
   );
 }
 
-export default AddProduct;
+export default UpdateProduct;

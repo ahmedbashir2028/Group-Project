@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 // react-bootstrap components
 import { Card, Table, Container, Row, Col, Form } from "react-bootstrap";
 
 function Orders() {
+  //const order status
+  const [orderStatus, setOrderStatus] = useState("");
   return (
     <>
       <Container fluid>
@@ -40,11 +42,14 @@ function Orders() {
                       <td>14-12-2022</td>
                       <td>1</td>
                       <td>COD</td>
-                      <td>Pending</td>
+                      <td>{orderStatus}</td>
                       <td>
                         {" "}
-                        <Form.Select className="form-control">
-                          <option>Order Status</option>
+                        <Form.Select
+                          className="form-control"
+                          onChange={(e) => setOrderStatus(e.target.value)}
+                          defaultValue={orderStatus}
+                        >
                           <option value="Pending">Pending</option>
                           <option value="Packing">Packing</option>
                           <option value="On the way">On the way</option>

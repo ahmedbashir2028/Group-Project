@@ -27,6 +27,7 @@ import AllProducts from "views/AllProducts";
 import Payments from "views/Payments";
 import Orders from "views/Orders";
 import CustomersList from "views/CustomersList";
+import UpdateProduct from "views/UpdateProduct";
 
 const dashboardRoutes = [
   {
@@ -45,14 +46,7 @@ const dashboardRoutes = [
     showInSideBar: true,
     layout: "/admin",
   },
-  // {
-  //   path: "/user",
-  //   name: "User Profile",
-  //   icon: "nc-icon nc-circle-09",
-  //   component: UserProfile,
-  //   showInSideBar: true,
-  //   layout: "/admin",
-  // },
+
   {
     path: "/products",
     name: "All Products",
@@ -78,6 +72,14 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
+    path: "/UpdateProduct/:id",
+    name: "Update Product",
+    icon: "nc-icon nc-simple-add",
+    component: UpdateProduct,
+    showInSideBar: false,
+    layout: "/admin",
+  },
+  {
     path: "/Payments",
     name: "Payments",
     icon: "nc-icon nc-credit-card",
@@ -98,6 +100,14 @@ const dashboardRoutes = [
     name: "Customers List",
     icon: "nc-icon nc-single-02",
     component: CustomersList,
+    showInSideBar: true,
+    layout: "/admin",
+  },
+  {
+    path: "/profile",
+    name: "Profile Setting",
+    icon: "nc-icon nc-settings-gear-64",
+    component: UserProfile,
     showInSideBar: true,
     layout: "/admin",
   },

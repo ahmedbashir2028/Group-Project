@@ -2,8 +2,36 @@ import React from "react";
 
 // react-bootstrap components
 import { Card, Table, Container, Row, Col } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+// confirmation alert import
+
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 function AllProducts() {
+  const history = useHistory();
+  // handle deletion confirmation
+  const handleDeleteAlert = (id) => {
+    confirmAlert({
+      title: "Delete",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelete(id),
+        },
+        {
+          label: "No",
+          onClick: () => history.goBack,
+        },
+      ],
+    });
+  };
+
+  // handle delete
+  const handleDelete = (id) => {
+    console.log(id);
+  };
   return (
     <>
       <Container fluid>
@@ -40,8 +68,17 @@ function AllProducts() {
                       <td>Oud-Turnhout</td>
                       <td>345</td>
                       <td>
-                        <button className="btn btn-primary">Edit</button>
-                        <button className="btn btn-danger mx-3">Delete</button>
+                        <Link to={`UpdateProduct/${1}`}>
+                          <button className="btn btn-primary mx-1 my-s-1">
+                            Edit
+                          </button>
+                        </Link>
+                        <button
+                          className="btn btn-danger mx-1"
+                          onClick={() => handleDeleteAlert(1)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   </tbody>

@@ -73,7 +73,7 @@ function Notifications() {
                 <h5>
                   <small>Notifications Style</small>
                 </h5>
-                <Alert variant="info">
+                <Alert variant="danger">
                   <span>This is a plain notification</span>
                 </Alert>
                 <Alert variant="info">
