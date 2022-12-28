@@ -1,15 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // react-bootstrap components
 import { Card, Table, Container, Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 // confirmation alert import
 
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import Loader from "./sharedUI/Loader";
+// alert notification
+import Swal from "sweetalert2";
 
 function AllProducts() {
+  const [data, setData] = useState([]);
+  const [isloading, setIsloading] = useState(true);
   const history = useHistory();
+  const url = "http://localhost:5000/v1/admin/products";
+  // useEffect
+
+  useEffect(() => {
+    console.log("Data is here");
+    axios
+      .get(`${url}/list`)
+      .then((data) => {
+        setData(data.data);
+        setIsloading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (!isloading) {
+      console.log(data);
+    }
+  }, [isloading]);
+
+  // toast notification
+  const Notification = (title, text, icon) => {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonText: "OK",
+    });
+  };
+
   // handle deletion confirmation
   const handleDeleteAlert = (id) => {
     confirmAlert({
@@ -31,6 +67,15 @@ function AllProducts() {
   // handle delete
   const handleDelete = (id) => {
     console.log(id);
+    axios
+      .delete(`${url}/delete/${id}`)
+      .then((res) => {
+        Notification("Deleted", res.data.message, "success");
+        setIsloading(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>
@@ -53,34 +98,55 @@ function AllProducts() {
                       <th className="border-0">Brand</th>
                       <th className="border-0">Colors</th>
                       <th className="border-0">Price</th>
+                      <th className="border-0">Image</th>
                       <th className="border-0">Details</th>
                       <th className="border-0">Stock</th>
                       <th className="border-0">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Oppo Reno 3</td>
-                      <td>OPPO</td>
-                      <td>Color</td>
-                      <td>60000</td>
-                      <td>Oud-Turnhout</td>
-                      <td>345</td>
-                      <td>
-                        <Link to={`UpdateProduct/${1}`}>
-                          <button className="btn btn-primary mx-1 my-s-1">
-                            Edit
-                          </button>
-                        </Link>
-                        <button
-                          className="btn btn-danger mx-1"
-                          onClick={() => handleDeleteAlert(1)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
+                    {isloading ? (
+                      <span className="mx-auto">
+                        <Loader />
+                      </span>
+                    ) : data.products.length == 0 ? (
+                      <h2 className="alert alert-danger w-75 mx-auto">
+                        No product To show Please Add one
+                      </h2>
+                    ) : (
+                      data.products.map((da) => (
+                        <tr key={da._id}>
+                          <td>{da.productId}</td>
+                          <td>{da.productName}</td>
+                          <td>{da.productBrand}</td>
+                          <td>{da.productColor}</td>
+                          <td>{da.productPrice}</td>
+                          <td>
+                            {
+                              <img
+                                src={`${da.productImage}`}
+                                alt={`${da.productImage}`}
+                              />
+                            }
+                          </td>
+                          <td>{da.productDetails}</td>
+                          <td>{da.productStock}</td>
+                          <td>
+                            <Link to={`UpdateProduct/${1}`}>
+                              <button className="btn btn-primary mx-1 my-s-1">
+                                Edit
+                              </button>
+                            </Link>
+                            <button
+                              className="btn btn-danger mx-1"
+                              onClick={() => handleDeleteAlert(da._id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </Table>
               </Card.Body>
