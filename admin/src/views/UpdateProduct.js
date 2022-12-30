@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 // react-bootstrap components
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 
 // reuseable notification component
 import Swal from "sweetalert2";
+import axios from "axios";
 
 function UpdateProduct() {
   // useState hook for form data management
@@ -15,14 +16,20 @@ function UpdateProduct() {
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
   const [productDetails, setProductDetails] = useState("");
-  const [productImage, setProductImage] = useState(null);
+  const [productImage, setProductImage] = useState("");
 
-  // error management hook
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
+  // loading state
+  const [isloading, setIsloading] = useState(true);
+  // state hook to store data for the provided product id
+  const [data, setData] = useState([]);
   // useHistory
   const history = useHistory();
+  const params = useParams();
+
+  // API url
+  const url = "http://localhost:5000/v1/admin/products";
+  // Product Id from the url
+  const pid = params.id;
 
   // toast notification
   const Saved = () => {
@@ -33,6 +40,35 @@ function UpdateProduct() {
       confirmButtonText: "OK",
     });
   };
+
+  // useEffect hook to get the data from the given id
+
+  useEffect(() => {
+    axios
+      .get(`${url}/find/${pid}`)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+        setIsloading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // useEffect hook to set the form values like before
+
+  useEffect(() => {
+    if (!isloading) {
+      setProductId(data.data.productId);
+      setProductName(data.data.productName);
+      setBrandName(data.data.productBrand);
+      setProductColor(data.data.productColor);
+      setProductPrice(data.data.productPrice);
+      setProductStock(data.data.productStock);
+      setProductDetails(data.data.productDetails);
+    }
+  }, [isloading]);
   // form submission handling function
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +103,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Product ID</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="12"
                           type="text"
                           name="productId"
@@ -81,7 +116,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Product Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung A55s"
                           type="text"
                           name="productName"
@@ -95,7 +129,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Brand Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung"
                           type="text"
                           name="brandName"
@@ -109,7 +142,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Colors</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Red Golden Black"
                           type="text"
                           name="productColor"
@@ -123,7 +155,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Price</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="45000"
                           type="Number"
                           name="productPrice"
@@ -137,7 +168,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Available Stock</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="450"
                           type="Number"
                           name="productStock"
@@ -171,7 +201,6 @@ function UpdateProduct() {
                         <Form.Control
                           as="textarea"
                           rows={3}
-                          defaultValue=""
                           placeholder="Ram 3, Camera: 14MP"
                           type="text"
                           name="productDetails"

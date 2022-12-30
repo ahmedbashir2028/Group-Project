@@ -132,7 +132,7 @@ function AllProducts() {
                           <td>{da.productDetails}</td>
                           <td>{da.productStock}</td>
                           <td>
-                            <Link to={`UpdateProduct/${1}`}>
+                            <Link to={`UpdateProduct/${da._id}`}>
                               <button className="btn btn-primary mx-1 my-s-1">
                                 Edit
                               </button>
