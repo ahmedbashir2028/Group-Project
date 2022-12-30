@@ -6,6 +6,7 @@ import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 // reuseable notification component
 import Swal from "sweetalert2";
 import axios from "axios";
+import Loader from "./sharedUI/Loader";
 
 function UpdateProduct() {
   // useState hook for form data management
@@ -97,138 +98,144 @@ function UpdateProduct() {
                 <Card.Title as="h4">Update Product</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={handleSubmit}>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Product ID</label>
-                        <Form.Control
-                          placeholder="12"
-                          type="text"
-                          name="productId"
-                          value={productId}
-                          onChange={(e) => setProductId(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>{" "}
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Product Name</label>
-                        <Form.Control
-                          placeholder="Samsung A55s"
-                          type="text"
-                          name="productName"
-                          value={productName}
-                          onChange={(e) => setProductName(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Brand Name</label>
-                        <Form.Control
-                          placeholder="Samsung"
-                          type="text"
-                          name="brandName"
-                          value={brandName}
-                          onChange={(e) => setBrandName(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Colors</label>
-                        <Form.Control
-                          placeholder="Red Golden Black"
-                          type="text"
-                          name="productColor"
-                          value={productColor}
-                          onChange={(e) => setProductColor(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>Price</label>
-                        <Form.Control
-                          placeholder="45000"
-                          type="Number"
-                          name="productPrice"
-                          value={productPrice}
-                          onChange={(e) => setProductPrice(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>{" "}
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>Available Stock</label>
-                        <Form.Control
-                          placeholder="450"
-                          type="Number"
-                          name="productStock"
-                          value={productStock}
-                          onChange={(e) => setProductStock(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="12">
-                      <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Label>Select Product Image</Form.Label>
-                        <Form.Control
-                          type="file"
-                          className="form-control"
-                          name="productImage"
-                          placeholder="Please select product image"
-                          value={productImage}
-                          onChange={(e) => setProductImage(e.target.value)}
-                          required
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="12">
-                      <Form.Group>
-                        <label>Details</label>
-                        <Form.Control
-                          as="textarea"
-                          rows={3}
-                          placeholder="Ram 3, Camera: 14MP"
-                          type="text"
-                          name="productDetails"
-                          value={productDetails}
-                          onChange={(e) => setProductDetails(e.target.value)}
-                          required
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
+                {isloading === true ? (
+                  <>
+                    <Loader />
+                  </>
+                ) : (
+                  <Form onSubmit={handleSubmit}>
+                    <Row>
+                      <Col className="pr-1" md="6">
+                        <Form.Group>
+                          <label>Product ID</label>
+                          <Form.Control
+                            placeholder="12"
+                            type="text"
+                            name="productId"
+                            value={productId}
+                            onChange={(e) => setProductId(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>{" "}
+                      <Col className="pr-1" md="6">
+                        <Form.Group>
+                          <label>Product Name</label>
+                          <Form.Control
+                            placeholder="Samsung A55s"
+                            type="text"
+                            name="productName"
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                      <Col className="pr-1" md="6">
+                        <Form.Group>
+                          <label>Brand Name</label>
+                          <Form.Control
+                            placeholder="Samsung"
+                            type="text"
+                            name="brandName"
+                            value={brandName}
+                            onChange={(e) => setBrandName(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                      <Col className="pr-1" md="6">
+                        <Form.Group>
+                          <label>Colors</label>
+                          <Form.Control
+                            placeholder="Red Golden Black"
+                            type="text"
+                            name="productColor"
+                            value={productColor}
+                            onChange={(e) => setProductColor(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                      <Col className="pl-1" md="6">
+                        <Form.Group>
+                          <label>Price</label>
+                          <Form.Control
+                            placeholder="45000"
+                            type="Number"
+                            name="productPrice"
+                            value={productPrice}
+                            onChange={(e) => setProductPrice(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>{" "}
+                      <Col className="pl-1" md="6">
+                        <Form.Group>
+                          <label>Available Stock</label>
+                          <Form.Control
+                            placeholder="450"
+                            type="Number"
+                            name="productStock"
+                            value={productStock}
+                            onChange={(e) => setProductStock(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col className="pr-1" md="12">
+                        <Form.Group controlId="formFile" className="mb-3">
+                          <Form.Label>Select Product Image</Form.Label>
+                          <Form.Control
+                            type="file"
+                            className="form-control"
+                            name="productImage"
+                            placeholder="Please select product image"
+                            value={productImage}
+                            onChange={(e) => setProductImage(e.target.value)}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col className="pr-1" md="12">
+                        <Form.Group>
+                          <label>Details</label>
+                          <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Ram 3, Camera: 14MP"
+                            type="text"
+                            name="productDetails"
+                            value={productDetails}
+                            onChange={(e) => setProductDetails(e.target.value)}
+                            required
+                          ></Form.Control>
+                        </Form.Group>
+                      </Col>
+                    </Row>
 
-                  <Button
-                    className="btn-fill pull-right mt-2"
-                    type="submit"
-                    variant="primary"
-                    // onClick={handleSubmit}
-                  >
-                    Update Product
-                  </Button>
-                  <button
-                    className="btn btn-light mt-2 mx-2"
-                    onClick={history.goBack}
-                    type="button"
-                  >
-                    Back
-                  </button>
-                  <div className="clearfix"></div>
-                </Form>
+                    <Button
+                      className="btn-fill pull-right mt-2"
+                      type="submit"
+                      variant="primary"
+                      // onClick={handleSubmit}
+                    >
+                      Update Product
+                    </Button>
+                    <button
+                      className="btn btn-light mt-2 mx-2"
+                      onClick={history.goBack}
+                      type="button"
+                    >
+                      Back
+                    </button>
+                    <div className="clearfix"></div>
+                  </Form>
+                )}
               </Card.Body>
             </Card>
           </Col>
