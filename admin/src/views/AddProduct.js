@@ -4,7 +4,9 @@ import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 
 // toaster alert
 import { ToastContainer, toast } from "react-toastify";
+
 import Swal from "sweetalert2";
+
 function AddProduct() {
   // useState hook for form data management
   const [productId, setProductId] = useState("");
