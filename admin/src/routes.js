@@ -35,7 +35,7 @@ const dashboardRoutes = [
     name: "Login",
     icon: "nc-icon nc-chart-pie-35",
     component: Login,
-    showInSideBar: false,
+    showInSideBar: true,
     layout: "/unauth",
   },
   {
@@ -48,7 +48,7 @@ const dashboardRoutes = [
   },
 
   {
-    path: "/products",
+    path: "/products/list",
     name: "All Products",
     icon: "nc-icon nc-app",
     component: AllProducts,
@@ -64,7 +64,7 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/AddProduct",
+    path: "/products/new",
     name: "Add Product",
     icon: "nc-icon nc-simple-add",
     component: AddProduct,
@@ -72,7 +72,7 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/UpdateProduct/:id",
+    path: "/products/update/:id",
     name: "Update Product",
     icon: "nc-icon nc-simple-add",
     component: UpdateProduct,

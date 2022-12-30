@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 // react-bootstrap components
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 
 // reuseable notification component
 import Swal from "sweetalert2";
+import axios from "axios";
+import { AlertNotify } from "./sharedUI/AlertNotify";
 
 function UpdateProduct() {
   // useState hook for form data management
@@ -15,14 +17,23 @@ function UpdateProduct() {
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
   const [productDetails, setProductDetails] = useState("");
-  const [productImage, setProductImage] = useState(null);
+  const [productImage, setProductImage] = useState("");
 
-  // error management hook
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // State hook to get data for the specific product id
+  const [data, setData] = useState([]);
+
+  // loading hook
+  const [isLoading, setIsloading] = useState(false);
 
   // useHistory
   const history = useHistory();
+
+  // useParams
+  const param = useParams();
+  const pId = param.id;
+
+  // API url
+  const url = "http://localhost:5000/v1/admin/products";
 
   // toast notification
   const Saved = () => {
@@ -33,6 +44,39 @@ function UpdateProduct() {
       confirmButtonText: "OK",
     });
   };
+
+  // useEffect to get data from the backend and show in the form for specific id
+
+  useEffect(() => {
+    setIsloading(true);
+    console.log(pId);
+    axios
+      .get(`${url}/find/${pId}`)
+      .then((res) => {
+        console.log("data");
+        console.log(res.data);
+        setData(res.data.data);
+        setIsloading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // useEffect to set the form data
+  useEffect(() => {
+    if (!isLoading) {
+      console.log("data from data");
+      setProductId(data.productId);
+      setProductName(data.productName);
+      setProductColor(data.productColor);
+      setBrandName(data.productBrand);
+      setProductPrice(data.productPrice);
+      setProductStock(data.productStock);
+      setProductImage("");
+      setProductDetails(data.productDetails);
+    }
+  }, [isLoading]);
   // form submission handling function
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +111,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Product ID</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="12"
                           type="text"
                           name="productId"
@@ -81,7 +124,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Product Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung A55s"
                           type="text"
                           name="productName"
@@ -95,7 +137,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Brand Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung"
                           type="text"
                           name="brandName"
@@ -109,7 +150,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Colors</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Red Golden Black"
                           type="text"
                           name="productColor"
@@ -123,7 +163,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Price</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="45000"
                           type="Number"
                           name="productPrice"
@@ -137,7 +176,6 @@ function UpdateProduct() {
                       <Form.Group>
                         <label>Available Stock</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="450"
                           type="Number"
                           name="productStock"
@@ -171,7 +209,6 @@ function UpdateProduct() {
                         <Form.Control
                           as="textarea"
                           rows={3}
-                          defaultValue=""
                           placeholder="Ram 3, Camera: 14MP"
                           type="text"
                           name="productDetails"

@@ -16,9 +16,11 @@ function AllProducts() {
   const [data, setData] = useState([]);
   const [isloading, setIsloading] = useState(true);
   const history = useHistory();
-  const url = "http://localhost:5000/v1/admin/products";
-  // useEffect
 
+  // api url
+  const url = "http://localhost:5000/v1/admin/products";
+
+  // useEffect For getting user data in the table
   useEffect(() => {
     console.log("Data is here");
     axios
@@ -132,7 +134,7 @@ function AllProducts() {
                           <td>{da.productDetails}</td>
                           <td>{da.productStock}</td>
                           <td>
-                            <Link to={`UpdateProduct/${1}`}>
+                            <Link to={`update/${da._id}`}>
                               <button className="btn btn-primary mx-1 my-s-1">
                                 Edit
                               </button>

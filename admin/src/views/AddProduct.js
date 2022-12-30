@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 // react-bootstrap components
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
@@ -16,11 +17,11 @@ function AddProduct() {
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
   const [productDetails, setProductDetails] = useState("");
-  const [productImage, setProductImage] = useState(null);
-  // error management hook
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [productImage, setProductImage] = useState("");
 
+  // api url
+
+  const url = "http://localhost:5000/v1/admin/products";
   // toast notification
   const Saved = () => {
     Swal.fire({
@@ -34,19 +35,35 @@ function AddProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
-    console.log(
+    // setError("");
+    // console.log(
+    //   productId,
+    //   productName,
+    //   brandName,
+    //   productColor,
+    //   productPrice,
+    //   productStock,
+    //   productImage,
+    //   productDetails
+    // );
+    const newProduct = {
       productId,
       productName,
       brandName,
       productColor,
       productPrice,
       productStock,
-      productImage,
-      productDetails
-    );
+      productImage: "img.com",
+      productDetails,
+    };
 
-    Saved();
+    axios
+      .post(`${url}/new`, newProduct)
+      .then((res) => {
+        console.log(res);
+        Saved();
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <>
@@ -58,13 +75,12 @@ function AddProduct() {
                 <Card.Title as="h4">Add New Product</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} method="POST">
                   <Row>
                     <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Product ID</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="12"
                           type="text"
                           name="productId"
@@ -78,7 +94,6 @@ function AddProduct() {
                       <Form.Group>
                         <label>Product Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung A55s"
                           type="text"
                           name="productName"
@@ -92,7 +107,6 @@ function AddProduct() {
                       <Form.Group>
                         <label>Brand Name</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Samsung"
                           type="text"
                           name="brandName"
@@ -106,7 +120,6 @@ function AddProduct() {
                       <Form.Group>
                         <label>Colors</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="Red Golden Black"
                           type="text"
                           name="productColor"
@@ -120,7 +133,6 @@ function AddProduct() {
                       <Form.Group>
                         <label>Price</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="45000"
                           type="Number"
                           name="productPrice"
@@ -134,7 +146,6 @@ function AddProduct() {
                       <Form.Group>
                         <label>Available Stock</label>
                         <Form.Control
-                          defaultValue=""
                           placeholder="450"
                           type="Number"
                           name="productStock"
@@ -146,7 +157,7 @@ function AddProduct() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="12">
+                    {/* <Col className="pr-1" md="12">
                       <Form.Group controlId="formFile" className="mb-3">
                         <Form.Label>Select Product Image</Form.Label>
                         <Form.Control
@@ -158,7 +169,7 @@ function AddProduct() {
                           onChange={(e) => setProductImage(e.target.value)}
                         />
                       </Form.Group>
-                    </Col>
+                    </Col> */}
                   </Row>
                   <Row>
                     <Col className="pr-1" md="12">
@@ -167,7 +178,6 @@ function AddProduct() {
                         <Form.Control
                           as="textarea"
                           rows={3}
-                          defaultValue=""
                           placeholder="Ram 3, Camera: 14MP"
                           type="text"
                           name="productDetails"

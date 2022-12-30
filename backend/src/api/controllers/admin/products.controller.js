@@ -38,7 +38,7 @@ const addNewProduct = async (req, res, next) => {
     productColor,
     productPrice,
     productStock,
-    productImage: "img.com",
+    productImage: "testimage.com",
     productDetails,
   });
   try {
@@ -66,7 +66,7 @@ const getProductById = async (req, res, next) => {
     } else {
       return res
         .status(200)
-        .json({ message: "Product Found Succesfully", data: findedProduct });
+        .json({ message: "Product Found Successfully", data: findedProduct });
     }
   } catch (err) {
     const error = res.status(500).json({
