@@ -1,5 +1,10 @@
-const { cloudinary } = require("../../../config/vars");
+// const { cloudinary } = require("../../../config/vars");
 const Product = require("../../models/product.model");
+// cloudinary
+
+const cloudinary = require("cloudinary");
+const multer = require("multer");
+const upload = multer({ dest: "upload/" });
 
 // get all products
 const getAllProducts = async (req, res, next) => {
@@ -23,14 +28,14 @@ const getAllProducts = async (req, res, next) => {
 // add new product
 const addNewProduct = async (req, res, next) => {
   const {
-    productId,
-    productName,
-    productBrand,
-    productColor,
-    productPrice,
-    productStock,
-    // productImage,
-    productDetails,
+    name,
+    price,
+    description,
+    rating,
+    images,
+    brand,
+    stock,
+    numOfReviews,
   } = req.body;
   // image uploading
   // const result = await cloudinary.v2.uploader.upload(req.body.productImage, {
@@ -39,14 +44,14 @@ const addNewProduct = async (req, res, next) => {
   //   crop: "scale",
   // });
   const newProduct = new Product({
-    productId,
-    productName,
-    productBrand,
-    productColor,
-    productPrice,
-    productStock,
-    productImage: "img",
-    productDetails,
+    name,
+    price,
+    description,
+    rating,
+    images,
+    brand,
+    stock,
+    numOfReviews,
   });
   try {
     await Product.create(newProduct);
