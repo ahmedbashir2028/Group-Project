@@ -11,6 +11,11 @@ module.exports = {
     // MONGO_URL:
     // "mongodb+srv://admin:WtlH6EXyUl5mYwDu@cluster0.hs0ys0f.mongodb.net/Shopit?retryWrites=true&w=majority",
   },
+  CLOUDINARY: {
+    CLOUDINARY_NAME: "dxxln2pn2",
+    CLOUDINARY_API: "282966749357711",
+    CLOUDINARY_SECRET: "ua_T-bp5jtj_gPGPf8hxRSrQOqU",
+  },
 };
 // module.exports = {
 //   port: process.env.PORT,

@@ -1,3 +1,4 @@
+const { cloudinary } = require("../../../config/vars");
 const Product = require("../../models/product.model");
 
 // get all products
@@ -31,6 +32,12 @@ const addNewProduct = async (req, res, next) => {
     // productImage,
     productDetails,
   } = req.body;
+  // image uploading
+  // const result = await cloudinary.v2.uploader.upload(req.body.productImage, {
+  //   folder: "Products",
+  //   width: 150,
+  //   crop: "scale",
+  // });
   const newProduct = new Product({
     productId,
     productName,
@@ -38,18 +45,17 @@ const addNewProduct = async (req, res, next) => {
     productColor,
     productPrice,
     productStock,
-    productImage: "img.com",
+    productImage: "img",
     productDetails,
   });
   try {
-    await newProduct.save();
+    await Product.create(newProduct);
     res
       .status(201)
       .json({ message: "Product Created Successfully", newProduct });
   } catch (err) {
     const error = res.status(404).json({
-      message:
-        "Some error occured while saving the product, please try again later",
+      message: err,
     });
     return error;
   }
