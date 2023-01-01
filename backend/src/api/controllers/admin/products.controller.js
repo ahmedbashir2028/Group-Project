@@ -1,11 +1,19 @@
 // const { cloudinary } = require("../../../config/vars");
 const Product = require("../../models/product.model");
 // cloudinary
+const cloudinary = require("cloudinary").v2;
 
-const cloudinary = require("cloudinary");
+// multer
 const multer = require("multer");
-const upload = multer({ dest: "upload/" });
+const upload = multer({ dest: "uploads/" });
 
+// configure cloudinary
+
+cloudinary.config({
+  cloud_name: "dxxln2pn2",
+  api_key: "282966749357711",
+  api_secret: "ua_T-bp5jtj_gPGPf8hxRSrQOqU",
+});
 // get all products
 const getAllProducts = async (req, res, next) => {
   let products;
@@ -32,11 +40,38 @@ const addNewProduct = async (req, res, next) => {
     price,
     description,
     rating,
-    images,
+    // images,
     brand,
     stock,
     numOfReviews,
   } = req.body;
+
+  // getting file
+
+  const file = req.body.image;
+  console.log(file);
+
+  // cloudinary.uploader.upload(file, (error, result) => {
+  //   if (error) {
+  //     return res.status(400).send(error);
+  //   } else {
+  //     res.send({
+  //       url: result.secure_url,
+  //     });
+  //   }
+  // });
+  // let result;
+  // try {
+  //   result = await cloudinary.uploader.upload(file, {
+  //     folder: "Products",
+  //     width: 150,
+  //     crop: "scale",
+  //   });
+  //   console.log(result);
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(400).send(err);
+  // }
   // image uploading
   // const result = await cloudinary.v2.uploader.upload(req.body.productImage, {
   //   folder: "Products",
@@ -48,7 +83,10 @@ const addNewProduct = async (req, res, next) => {
     price,
     description,
     rating,
-    images,
+    images: {
+      public_id: "result.public_id",
+      url: "result.secure_url",
+    },
     brand,
     stock,
     numOfReviews,
@@ -89,14 +127,14 @@ const getProductById = async (req, res, next) => {
 // update product
 const updateProduct = async (req, res, next) => {
   const {
-    productId,
-    productName,
-    productBrand,
-    productColor,
-    productPrice,
-    productStock,
-    productImage,
-    productDetails,
+    name,
+    price,
+    description,
+    rating,
+    images,
+    brand,
+    stock,
+    numOfReviews,
   } = req.body;
   const pid = req.params.id;
   let findedProduct;
@@ -116,14 +154,14 @@ const updateProduct = async (req, res, next) => {
     return error;
   }
 
-  findedProduct.productId = productId;
-  findedProduct.productName = productName;
-  findedProduct.productBrand = productBrand;
-  findedProduct.productColor = productColor;
-  findedProduct.productPrice = productPrice;
-  findedProduct.productStock = productStock;
-  findedProduct.productImage = productImage;
-  findedProduct.productDetails = productDetails;
+  findedProduct.name = name;
+  findedProduct.price = price;
+  findedProduct.description = description;
+  findedProduct.rating = rating;
+  findedProduct.images = images;
+  findedProduct.brand = brand;
+  findedProduct.stock = stock;
+  findedProduct.numOfReviews = numOfReviews;
   try {
     await findedProduct.save();
     return res.send({

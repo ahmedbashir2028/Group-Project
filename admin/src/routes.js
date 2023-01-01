@@ -64,11 +64,12 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/products/new",
+    path: "/AddProduct",
     name: "Add Product",
     icon: "nc-icon nc-simple-add",
     component: AddProduct,
     showInSideBar: true,
+    exact: true,
     layout: "/admin",
   },
   {
